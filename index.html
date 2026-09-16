@@ -1,0 +1,615 @@
+<meta charset="utf-8">
+<title>Som que Acalma</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,450;0,9..144,560;0,9..144,650;1,9..144,500&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="icon" href="icon-logo.png">
+<link rel="apple-touch-icon" href="icon-logo.png">
+<meta name="theme-color" content="#4C7A63">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Som Acalma">
+<style>
+  :root{
+    --bg:#F4F7F1;
+    --surface:#FFFFFF;
+    --surface-2:#E9F0E5;
+    --line:#DAE4D5;
+    --text:#22302A;
+    --text-muted:#5D6E63;
+    --accent:#4C7A63;
+    --accent-strong:#365A48;
+    --accent-soft:#DEEAE1;
+    --accent2:#7E71AC;
+    --accent2-soft:#E6E1F4;
+    --shadow:0 1px 2px rgba(34,42,36,.06), 0 10px 28px -14px rgba(34,42,36,.28);
+    --radius-s:10px;
+    --radius-m:16px;
+    --radius-l:26px;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10140F;
+      --surface:#181F19;
+      --surface-2:#202A22;
+      --line:#2A362D;
+      --text:#E8EEE6;
+      --text-muted:#9DB0A2;
+      --accent:#87BA9F;
+      --accent-strong:#A9D3BB;
+      --accent-soft:#1E2E25;
+      --accent2:#B2A6DE;
+      --accent2-soft:#241F36;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10140F;
+    --surface:#181F19;
+    --surface-2:#202A22;
+    --line:#2A362D;
+    --text:#E8EEE6;
+    --text-muted:#9DB0A2;
+    --accent:#87BA9F;
+    --accent-strong:#A9D3BB;
+    --accent-soft:#1E2E25;
+    --accent2:#B2A6DE;
+    --accent2-soft:#241F36;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none!important;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Figtree',system-ui,-apple-system,sans-serif;
+    padding-inline:16px;
+    padding-block:28px 48px;
+    display:flex;
+    justify-content:center;
+  }
+  main{width:100%;max-width:560px;display:flex;flex-direction:column;gap:22px;}
+
+  h1,h2{font-family:'Fraunces',Georgia,serif;font-weight:560;letter-spacing:-.01em;text-wrap:balance;margin:0;}
+  p{margin:0;}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-block:14px 4px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .logo-card{
+    background:#FCFEFC;border-radius:var(--radius-l);
+    padding:16px 22px;box-shadow:var(--shadow);
+    display:inline-flex;max-width:100%;
+  }
+  .logo-card img{display:block;width:100%;max-width:280px;height:auto;}
+  @keyframes breathe{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.14);}
+  }
+  .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:600;}
+  .hero p.lede{max-width:40ch;color:var(--text-muted);font-size:15px;line-height:1.5;}
+
+  /* ---------- card ---------- */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-l);
+    padding:20px;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .card h2{font-size:19px;}
+  .card .hint{font-size:13px;color:var(--text-muted);}
+  .step-tag{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent-strong);
+    font-size:12px;font-weight:700;font-family:'Figtree',sans-serif;
+    flex:none;
+  }
+  .card-head{display:flex;align-items:center;gap:10px;}
+
+  /* ---------- mood scale ---------- */
+  .mood-row{display:flex;gap:8px;justify-content:space-between;}
+  .mood-btn{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+    padding-block:10px 8px;border-radius:var(--radius-m);
+    border:1px solid var(--line);background:var(--surface-2);
+    font-family:inherit;color:var(--text-muted);cursor:pointer;
+    font-size:10.5px;line-height:1.2;text-align:center;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .mood-btn .emoji{font-size:22px;line-height:1;}
+  .mood-btn:hover{transform:translateY(-2px);}
+  .mood-btn[aria-pressed="true"]{
+    background:var(--accent2-soft);border-color:var(--accent2);color:var(--text);font-weight:600;
+  }
+  .mood-btn:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;}
+
+  /* ---------- player de áudio (versão local, sem vídeo visível) ---------- */
+  #playlist-body{display:flex;flex-direction:column;gap:14px;}
+  .audio-player{
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    padding:28px 20px;border-radius:var(--radius-l);
+    background:radial-gradient(circle at 50% 20%, var(--accent-soft), var(--surface-2));
+    box-shadow:var(--shadow);
+  }
+  .audio-orb-btn{
+    width:120px;height:120px;border-radius:50%;border:none;cursor:pointer;
+    background:radial-gradient(circle at 34% 30%, var(--accent-strong), var(--accent) 55%, var(--accent-soft) 100%);
+    box-shadow:0 0 0 12px var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:30px;transition:transform .15s ease;
+  }
+  .audio-orb-btn:hover{transform:scale(1.03);}
+  .audio-orb-btn.playing{animation:breathe 6s ease-in-out infinite;}
+  @media (prefers-reduced-motion: reduce){ .audio-orb-btn.playing{animation:none;} }
+  .now-playing{font-size:13px;font-weight:600;color:var(--text-muted);text-align:center;min-height:18px;}
+  .yt-audio-mount{position:fixed;left:-9999px;top:-9999px;width:2px;height:2px;overflow:hidden;}
+  .yt-fallback{font-size:12px;color:var(--text-muted);text-align:center;}
+  .yt-fallback a{color:var(--accent-strong);}
+
+  /* ---------- track list ---------- */
+  .track-list{display:flex;flex-direction:column;gap:8px;}
+  .track{
+    display:flex;align-items:center;gap:12px;width:100%;
+    padding:10px 12px;border-radius:var(--radius-m);
+    border:1px solid var(--line);background:var(--surface-2);
+    cursor:pointer;text-align:left;font-family:inherit;color:var(--text);
+    text-decoration:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .track:hover{border-color:var(--accent);}
+  .track[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);}
+  .track .play-ico{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;
+  }
+  .track[aria-current="true"] .play-ico{background:var(--accent-strong);}
+  .track .meta{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .track .title{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .track .sub{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .track .go{margin-left:auto;flex:none;font-size:15px;color:var(--text-muted);}
+
+  /* ---------- register ---------- */
+  .register-btn{
+    appearance:none;border:none;border-radius:999px;
+    padding:12px 18px;font-family:inherit;font-weight:700;font-size:14px;
+    background:var(--accent);color:#fff;cursor:pointer;
+    transition:opacity .15s ease, transform .12s ease;
+  }
+  .register-btn:disabled{opacity:.45;cursor:not-allowed;}
+  .register-btn:not(:disabled):hover{transform:translateY(-1px);}
+  .status-msg{font-size:13px;color:var(--accent-strong);font-weight:600;min-height:18px;}
+  .reset-link{
+    align-self:flex-start;background:none;border:none;font-family:inherit;
+    color:var(--text-muted);font-size:12.5px;text-decoration:underline;cursor:pointer;padding:0;
+  }
+  .secondary-btn{
+    appearance:none;border:1px solid var(--accent);border-radius:999px;
+    padding:10px 16px;font-family:inherit;font-weight:700;font-size:13px;
+    background:transparent;color:var(--accent-strong);cursor:pointer;align-self:flex-start;
+    transition:opacity .15s ease, transform .12s ease, background .15s ease;
+  }
+  .secondary-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .secondary-btn:not(:disabled):hover{background:var(--accent-soft);transform:translateY(-1px);}
+  .export-row{display:flex;flex-direction:column;gap:6px;align-items:flex-start;}
+
+  /* ---------- impact ---------- */
+  .example-tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.02em;
+    background:var(--accent2-soft);color:var(--accent2);padding:3px 9px;border-radius:999px;
+  }
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .stat-tile{
+    background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-m);
+    padding:12px 14px;display:flex;flex-direction:column;gap:2px;
+  }
+  .stat-tile .num{font-family:'Fraunces',serif;font-weight:600;font-size:24px;font-variant-numeric:tabular-nums;}
+  .stat-tile .label{font-size:11.5px;color:var(--text-muted);}
+  .stat-tile.delta .num{color:var(--accent-strong);}
+  .chart-wrap{display:flex;flex-direction:column;gap:6px;}
+  .chart-wrap svg{width:100%;height:auto;overflow:visible;}
+  .chart-caption{font-size:12px;color:var(--text-muted);}
+
+  footer{text-align:center;font-size:12px;color:var(--text-muted);line-height:1.6;padding-top:6px;}
+  footer strong{color:var(--text);}
+</style>
+
+<main>
+  <div class="hero">
+    <h1 class="sr-only">Som que Acalma</h1>
+    <div class="logo-card">
+      <img src="logotipo.jpg" width="1024" height="559" alt="Logotipo Som que Acalma — música, bem-estar, concentração. InovaTech, Nível 1, 7º Ano, Proposta Acadêmica.">
+    </div>
+    <p class="eyebrow">Colégio Propósito · Teresina</p>
+    <p class="lede">Conte como você está antes de ouvir — a playlist muda de acordo com seu humor. Depois, diga como ficou: sua resposta vira um dado real no painel de impacto.</p>
+  </div>
+
+  <section class="card" id="before-card">
+    <div class="card-head">
+      <span class="step-tag">1</span>
+      <h2>Antes de ouvir, como você está?</h2>
+    </div>
+    <div class="mood-row" id="mood-before" role="group" aria-label="Como você está antes de ouvir"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="step-tag">2</span>
+      <h2 id="playlist-title">Escolha uma faixa e respire</h2>
+    </div>
+    <p class="hint" id="playlist-hint">Primeiro conte como você está lá em cima ⬆, pra gente sugerir a playlist certa pra você.</p>
+    <div id="playlist-body" hidden>
+      <div class="audio-player">
+        <button class="audio-orb-btn" id="play-pause-btn" type="button" aria-label="Tocar">
+          <span id="play-pause-ico" aria-hidden="true">▶</span>
+        </button>
+        <p class="now-playing" id="now-playing"></p>
+      </div>
+      <p class="yt-fallback">Áudio não tocou? <a id="yt-open" href="#" target="_blank" rel="noopener">Abrir no YouTube ↗</a></p>
+      <div class="track-list" id="track-list"></div>
+    </div>
+  </section>
+
+  <section class="card" id="after-card">
+    <div class="card-head">
+      <span class="step-tag">3</span>
+      <h2>Depois de ouvir, como você está?</h2>
+    </div>
+    <div class="mood-row" id="mood-after" role="group" aria-label="Como você está depois de ouvir"></div>
+    <button class="register-btn" id="register-btn" disabled>Registrar minha experiência</button>
+    <p class="status-msg" id="status-msg" aria-live="polite"></p>
+    <button class="reset-link" id="reset-btn" hidden>🔄 Sou a próxima pessoa — recomeçar</button>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <span class="step-tag">📊</span>
+      <h2>Impacto no estande</h2>
+      <span class="example-tag" id="example-tag" hidden>dados de exemplo</span>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-tile"><span class="num" id="stat-count">–</span><span class="label">respostas registradas</span></div>
+      <div class="stat-tile delta"><span class="num" id="stat-delta">–</span><span class="label">evolução média de calma</span></div>
+      <div class="stat-tile"><span class="num" id="stat-before">–</span><span class="label">média antes (escala 1–5)</span></div>
+      <div class="stat-tile"><span class="num" id="stat-after">–</span><span class="label">média depois (escala 1–5)</span></div>
+    </div>
+    <div class="chart-wrap">
+      <svg id="chart" viewBox="0 0 300 150" role="img" aria-label="Comparação da média de calma antes e depois"></svg>
+      <p class="chart-caption">Escala de calma reportada pela turma, de 1 (agitado) a 5 (muito calmo).</p>
+    </div>
+    <div class="export-row">
+      <button class="secondary-btn" id="export-btn" disabled>⬇ Exportar respostas (.csv)</button>
+      <p class="hint" id="export-hint">Disponível após a primeira resposta registrada.</p>
+      <p class="status-msg" id="export-msg" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Som que Acalma</strong> · protótipo para a InovaTech 2026 — tema "Do Zero ao Impacto".<br>
+    Ideia de negócio: bem-estar emocional medido e mostrado como dado, não só sensação.
+  </footer>
+
+  <div class="yt-audio-mount" aria-hidden="true"><div id="yt-mount"></div></div>
+</main>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+(function(){
+  var MOODS = [
+    {v:1, emoji:'😣', label:'Agitado(a)'},
+    {v:2, emoji:'😕', label:'Tenso(a)'},
+    {v:3, emoji:'😐', label:'Neutro(a)'},
+    {v:4, emoji:'🙂', label:'Tranquilo(a)'},
+    {v:5, emoji:'😌', label:'Muito calmo(a)'}
+  ];
+
+  var PLAYLISTS = {
+    1: { label:'agitado(a)', tracks:[
+      {id:'UfcAVejslrU', title:'Weightless', sub:'Marconi Union · sugestão de Ana', tag:'estudo aponta como uma das mais relaxantes já criadas'},
+      {id:'q67w1eFY6Yc', title:'Calming Forest Ambience', sub:'sons da natureza · sugestão de Pedro', tag:'floresta, para acalmar rápido'}
+    ]},
+    2: { label:'tenso(a)', tracks:[
+      {id:'CQ8zglIXZi8', title:'Nuvole Bianche', sub:'Ludovico Einaudi · sugestão de Davi', tag:'piano instrumental'},
+      {id:'o8GrqUSdzi0', title:'You & Me (com chuva)', sub:'Peder B. Helland · sugestão de Sofia', tag:'piano + chuva'}
+    ]},
+    3: { label:'neutro(a)', tracks:[
+      {id:'jfKfPfyJRdk', title:'lofi hip hop radio', sub:'Lofi Girl · sugestão de Miguel', tag:'ao vivo 24h'},
+      {id:'oiGmGFxsJi8', title:'Calm Piano Music', sub:'sugestão de Laura', tag:'piano calmo p/ estudar'}
+    ]},
+    4: { label:'tranquilo(a)', tracks:[
+      {id:'acB1t65036U', title:'Peaceful Guitar', sub:'sugestão de Beatriz', tag:'violão acústico leve'},
+      {id:'CK9f3gI796Q', title:'Peaceful Energy', sub:'sugestão de Lucas', tag:'violão para começar o dia'}
+    ]},
+    5: { label:'muito calmo(a)', tracks:[
+      {id:'tVMdC-t0xyA', title:'Calm Morning Vibes', sub:'sugestão de Helena', tag:'instrumental leve, energia positiva'},
+      {id:'XU03cKb6DF4', title:'Morning Nature Sounds', sub:'sugestão de Rafael', tag:'natureza + instrumental suave'}
+    ]}
+  };
+
+  var STORAGE_KEY = 'somQueAcalma_checkins_v1';
+  var state = {before:null, after:null, activeTrack:0};
+  var downloadsApi = null;
+
+  function $(id){ return document.getElementById(id); }
+
+  function buildMoodRow(container, stage){
+    container.innerHTML = '';
+    MOODS.forEach(function(m){
+      var btn = document.createElement('button');
+      btn.className = 'mood-btn';
+      btn.type = 'button';
+      btn.setAttribute('aria-pressed','false');
+      btn.innerHTML = '<span class="emoji" aria-hidden="true">'+m.emoji+'</span><span>'+m.label+'</span>';
+      btn.addEventListener('click', function(){ selectMood(stage, m.v, container); });
+      container.appendChild(btn);
+    });
+  }
+
+  function selectMood(stage, value, container){
+    state[stage] = value;
+    Array.prototype.forEach.call(container.children, function(btn, i){
+      btn.setAttribute('aria-pressed', MOODS[i].v === value ? 'true' : 'false');
+    });
+    if(stage === 'before'){
+      state.activeTrack = 0;
+      renderPlaylistCard();
+    }
+    updateRegisterButton();
+  }
+
+  function updateRegisterButton(){
+    var btn = $('register-btn');
+    var ready = state.before !== null && state.after !== null;
+    btn.disabled = !ready;
+  }
+
+  function renderPlaylistCard(){
+    var title = $('playlist-title');
+    var hint = $('playlist-hint');
+    var body = $('playlist-body');
+    if(state.before === null){
+      title.textContent = 'Escolha uma faixa e respire';
+      hint.textContent = 'Primeiro conte como você está lá em cima ⬆, pra gente sugerir a playlist certa pra você.';
+      body.hidden = true;
+      $('track-list').innerHTML = '';
+      $('now-playing').textContent = '';
+      if(ytApi.playerReady && ytApi.player){
+        ytApi.player.stopVideo();
+      }
+      return;
+    }
+    var mood = PLAYLISTS[state.before];
+    title.textContent = 'Playlist pra quem está ' + mood.label;
+    hint.textContent = 'Toque numa faixa pra tocar aqui mesmo. Playlist de exemplo — troquem pelas faixas escolhidas pela turma de vocês.';
+    body.hidden = false;
+    playTrack(0, mood.tracks);
+  }
+
+  function buildTrackList(tracks){
+    var list = $('track-list');
+    list.innerHTML = '';
+    tracks.forEach(function(t, i){
+      var el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'track';
+      el.setAttribute('aria-current', i === state.activeTrack ? 'true' : 'false');
+      el.innerHTML =
+        '<span class="play-ico" aria-hidden="true">▶</span>' +
+        '<span class="meta"><span class="title">'+t.title+'</span><span class="sub">'+t.sub+' · '+t.tag+'</span></span>' +
+        (i === state.activeTrack ? '<span class="go" aria-hidden="true">tocando</span>' : '');
+      list.appendChild(el);
+    });
+    list.onclick = function(e){
+      var el = e.target.closest('.track');
+      if(!el) return;
+      var i = Array.prototype.indexOf.call(list.children, el);
+      if(i < 0) return;
+      playTrack(i, tracks);
+    };
+  }
+
+  var ytApi = { playerReady:false, player:null, pendingId:null, isPlaying:false };
+
+  window.onYouTubeIframeAPIReady = function(){
+    ytApi.player = new YT.Player('yt-mount', {
+      height: '1', width: '1',
+      playerVars: { playsinline: 1 },
+      events: {
+        onReady: function(){
+          ytApi.playerReady = true;
+          if(ytApi.pendingId){ ytApi.player.cueVideoById(ytApi.pendingId); ytApi.pendingId = null; }
+        },
+        onStateChange: function(e){
+          ytApi.isPlaying = (e.data === YT.PlayerState.PLAYING);
+          updatePlayPauseButton();
+        },
+        onError: function(){
+          $('now-playing').textContent = 'Não deu pra tocar essa faixa — tenta "Abrir no YouTube" abaixo.';
+        }
+      }
+    });
+  };
+
+  function updatePlayPauseButton(){
+    var btn = $('play-pause-btn');
+    var ico = $('play-pause-ico');
+    if(ytApi.isPlaying){
+      ico.textContent = '⏸';
+      btn.classList.add('playing');
+      btn.setAttribute('aria-label', 'Pausar');
+    }else{
+      ico.textContent = '▶';
+      btn.classList.remove('playing');
+      btn.setAttribute('aria-label', 'Tocar');
+    }
+  }
+
+  function playTrack(i, tracks){
+    state.activeTrack = i;
+    var t = tracks[i];
+    $('now-playing').textContent = t.title + ' · ' + t.sub;
+    $('yt-open').href = 'https://www.youtube.com/watch?v=' + t.id;
+    if(ytApi.playerReady && ytApi.player){
+      ytApi.player.loadVideoById(t.id);
+    }else{
+      ytApi.pendingId = t.id;
+    }
+    buildTrackList(tracks);
+  }
+
+  $('play-pause-btn').addEventListener('click', function(){
+    if(!ytApi.playerReady || !ytApi.player) return;
+    if(ytApi.isPlaying){ ytApi.player.pauseVideo(); }
+    else{ ytApi.player.playVideo(); }
+  });
+
+  function avg(arr){ return arr.reduce(function(a,b){return a+b;},0) / arr.length; }
+  function fmt(n){ return n.toFixed(1).replace('.', ','); }
+
+  function getRealCheckins(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+
+  function saveCheckin(entry){
+    try{
+      var arr = getRealCheckins();
+      arr.push(entry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+      return arr;
+    }catch(e){ return null; }
+  }
+
+  function computeStats(){
+    var real = getRealCheckins();
+    if(real.length > 0){
+      return {
+        count: real.length,
+        avgBefore: avg(real.map(function(r){return r.before;})),
+        avgAfter: avg(real.map(function(r){return r.after;})),
+        isExample: false
+      };
+    }
+    return {count:14, avgBefore:2.3, avgAfter:4.1, isExample:true};
+  }
+
+  function renderChart(avgBefore, avgAfter){
+    var baseline = 132, top = 14, usable = baseline - top;
+    function y(v){ return baseline - ((v-1)/4) * usable; }
+    var gridVals = [1,3,5];
+    var grid = gridVals.map(function(v){
+      return '<line x1="34" y1="'+y(v)+'" x2="290" y2="'+y(v)+'" stroke="var(--line)" stroke-width="1"></line>' +
+             '<text x="26" y="'+(y(v)+4)+'" font-size="10" text-anchor="end" fill="var(--text-muted)" font-family="Figtree, sans-serif">'+v+'</text>';
+    }).join('');
+    var bw = 64;
+    var xBefore = 84, xAfter = 190;
+    var hBefore = baseline - y(avgBefore);
+    var hAfter = baseline - y(avgAfter);
+    var bars =
+      '<rect x="'+xBefore+'" y="'+y(avgBefore)+'" width="'+bw+'" height="'+hBefore+'" rx="8" fill="var(--accent2)"></rect>' +
+      '<text x="'+(xBefore+bw/2)+'" y="'+(y(avgBefore)-8)+'" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text)" font-family=\'Fraunces, serif\'>'+fmt(avgBefore)+'</text>' +
+      '<text x="'+(xBefore+bw/2)+'" y="'+(baseline+16)+'" font-size="11" text-anchor="middle" fill="var(--text-muted)" font-family="Figtree, sans-serif">Antes</text>' +
+      '<rect x="'+xAfter+'" y="'+y(avgAfter)+'" width="'+bw+'" height="'+hAfter+'" rx="8" fill="var(--accent)"></rect>' +
+      '<text x="'+(xAfter+bw/2)+'" y="'+(y(avgAfter)-8)+'" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text)" font-family=\'Fraunces, serif\'>'+fmt(avgAfter)+'</text>' +
+      '<text x="'+(xAfter+bw/2)+'" y="'+(baseline+16)+'" font-size="11" text-anchor="middle" fill="var(--text-muted)" font-family="Figtree, sans-serif">Depois</text>';
+    $('chart').innerHTML =
+      '<line x1="34" y1="'+baseline+'" x2="290" y2="'+baseline+'" stroke="var(--line)" stroke-width="1.5"></line>' +
+      grid + bars;
+  }
+
+  function renderStats(){
+    var s = computeStats();
+    $('stat-count').textContent = s.count;
+    $('stat-before').textContent = fmt(s.avgBefore);
+    $('stat-after').textContent = fmt(s.avgAfter);
+    var delta = s.avgAfter - s.avgBefore;
+    $('stat-delta').textContent = (delta >= 0 ? '+' : '') + fmt(delta);
+    $('example-tag').hidden = !s.isExample;
+    renderChart(s.avgBefore, s.avgAfter);
+    updateExportButton();
+  }
+
+  function updateExportButton(){
+    var btn = $('export-btn');
+    var hint = $('export-hint');
+    var hasData = getRealCheckins().length > 0;
+    btn.disabled = !(hasData && downloadsApi);
+    if(!hasData){
+      hint.textContent = 'Disponível após a primeira resposta registrada.';
+    }else if(!downloadsApi){
+      hint.textContent = 'Exportação indisponível neste modo de visualização.';
+    }else{
+      hint.textContent = 'Gera uma planilha (.csv) com todas as respostas, pra enviar por e-mail ou abrir no Excel/Sheets.';
+    }
+  }
+
+  function buildCsv(){
+    var rows = ['data_hora,antes,depois,evolucao'];
+    getRealCheckins().forEach(function(r){
+      var stamp = new Date(r.ts).toLocaleString('pt-BR');
+      rows.push('"'+stamp+'",'+r.before+','+r.after+','+(r.after-r.before));
+    });
+    return '﻿' + rows.join('\r\n');
+  }
+
+  function initDownloads(){
+    if(!window.claude || typeof window.claude.use !== 'function') return;
+    window.claude.use('downloads').then(function(api){
+      downloadsApi = api;
+      updateExportButton();
+    }).catch(function(){ downloadsApi = null; });
+  }
+
+  $('export-btn').addEventListener('click', function(){
+    if(!downloadsApi) return;
+    var real = getRealCheckins();
+    if(real.length === 0) return;
+    var stamp = new Date().toISOString().slice(0,10);
+    downloadsApi.save({filename:'som-que-acalma-respostas-'+stamp+'.csv', data:buildCsv()})
+      .then(function(){
+        $('export-msg').textContent = 'Arquivo salvo! Agora é só enviar por e-mail ou abrir numa planilha.';
+      })
+      .catch(function(err){
+        if(err && err.code === 'declined') return;
+        $('export-msg').textContent = 'Não foi possível salvar agora. Tente de novo.';
+      });
+  });
+
+  function resetForNextPerson(){
+    state.before = null;
+    state.after = null;
+    state.activeTrack = 0;
+    buildMoodRow($('mood-before'), 'before');
+    buildMoodRow($('mood-after'), 'after');
+    renderPlaylistCard();
+    updateRegisterButton();
+    $('status-msg').textContent = '';
+    $('reset-btn').hidden = true;
+    $('before-card').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  $('register-btn').addEventListener('click', function(){
+    if(state.before === null || state.after === null) return;
+    saveCheckin({before:state.before, after:state.after, ts:Date.now()});
+    renderStats();
+    $('status-msg').textContent = 'Obrigada! Sua resposta entrou no painel de impacto 🌱';
+    $('reset-btn').hidden = false;
+    $('register-btn').disabled = true;
+  });
+
+  $('reset-btn').addEventListener('click', resetForNextPerson);
+
+  buildMoodRow($('mood-before'), 'before');
+  buildMoodRow($('mood-after'), 'after');
+  renderPlaylistCard();
+  renderStats();
+  initDownloads();
+})();
+</script>
